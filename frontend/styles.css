@@ -255,7 +255,8 @@ button { font-family: inherit; }
   margin: 0 auto;
   padding: 0 40px;
   width: 100%;
-  z-index: 10;
+  z-index: 20; /* Increased to stay above videos */
+  contain: layout style;
 }
 
 /* Две колонки (теперь центрированные) */
@@ -398,23 +399,25 @@ button { font-family: inherit; }
 .hero-right .video-bg-side {
   position: absolute;
   top: 50%;
-  height: 120%; /* Увеличиваем высоту, чтобы видео хорошо смотрелось по краям */
-  min-width: 600px;
+  height: 110%; /* Slightly smaller to prevent excessive size */
+  width: auto;
+  min-width: 500px;
   mix-blend-mode: normal;
   filter: none;
   pointer-events: none;
-  opacity: 1; /* Непрозрачное, по запросу */
+  opacity: 0.8; /* Slight transparency to keep it subtle */
+  will-change: transform;
 }
 
 /* Центр левого видео на левом краю экрана */
 .hero-right .video-bg-side.left {
-  left: -10%;
+  left: -150px;
   transform: translateY(-50%);
 }
 
 /* Центр правого видео на правом краю экрана и отзеркалено для симметрии */
 .hero-right .video-bg-side.right {
-  right: -10%;
+  right: -150px;
   transform: translateY(-50%) scaleX(-1);
 }
 
