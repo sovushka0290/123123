@@ -399,26 +399,26 @@ button { font-family: inherit; }
 .hero-right .video-bg-side {
   position: absolute;
   top: 50%;
-  height: 110%; /* Slightly smaller to prevent excessive size */
+  height: 95%; /* Slightly smaller as requested */
   width: auto;
-  min-width: 500px;
+  min-width: 450px;
   mix-blend-mode: normal;
   filter: none;
   pointer-events: none;
-  opacity: 0.8; /* Slight transparency to keep it subtle */
+  opacity: 0.8;
   will-change: transform;
 }
 
 /* Центр левого видео на левом краю экрана */
 .hero-right .video-bg-side.left {
   left: 0;
-  transform: translate(-30%, -50%); /* Only 30% off-screen to keep most of it visible on the edge */
+  transform: translate(-45%, -50%); /* Pushed further to the edge */
 }
 
 /* Центр правого видео на правом краю экрана и отзеркалено для симметрии */
 .hero-right .video-bg-side.right {
   right: 0;
-  transform: translate(30%, -50%) scaleX(-1);
+  transform: translate(45%, -50%) scaleX(-1);
 }
 
 /* ═══════════════════════════════════════
