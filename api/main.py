@@ -3,6 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import time
 import uuid
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI(title="ProtoQol Integrity Engine API", version="1.0")
 
@@ -74,6 +78,4 @@ async def get_missions():
         }
     }
 
-@app.get("/")
-def read_root():
-    return {"message": "ProtoQol API is running."}
+
