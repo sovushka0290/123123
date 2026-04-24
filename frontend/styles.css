@@ -286,9 +286,9 @@ button { font-family: inherit; }
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   overflow: hidden;
 }
@@ -411,14 +411,14 @@ button { font-family: inherit; }
 
 /* Центр левого видео на левом краю экрана */
 .hero-right .video-bg-side.left {
-  left: -150px;
-  transform: translateY(-50%);
+  left: 0;
+  transform: translate(-30%, -50%); /* Only 30% off-screen to keep most of it visible on the edge */
 }
 
 /* Центр правого видео на правом краю экрана и отзеркалено для симметрии */
 .hero-right .video-bg-side.right {
-  right: -150px;
-  transform: translateY(-50%) scaleX(-1);
+  right: 0;
+  transform: translate(30%, -50%) scaleX(-1);
 }
 
 /* ═══════════════════════════════════════
