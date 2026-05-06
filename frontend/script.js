@@ -478,7 +478,133 @@
             $('inspector-overlay')?.classList.remove('active');
         });
 
-        console.log("%c⟡ ProtoQol B2B MVP Bridge Active", "color: #00E5FF; font-weight: bold;");
+        // Biy Council Engine Simulation
+        const triggerBtn = $('trigger-consensus');
+        const agents = ['agent-auditor', 'agent-skeptic', 'agent-social', 'agent-master'];
+
+        async function simulateConsensus() {
+            if (triggerBtn) {
+                triggerBtn.disabled = true;
+                triggerBtn.textContent = "CONSENSUS IN PROGRESS...";
+            }
+
+            // Sequence nodes
+            for (const agentId of agents) {
+                const node = $(agentId);
+                if (node) {
+                    node.classList.add('active');
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+            }
+
+            // Core flash
+            const core = document.querySelector('.engine-core');
+            if (core) {
+                core.style.background = 'var(--color-primary)';
+                core.innerHTML = '<span style="color: #fff; font-family: \'Space Grotesk\', sans-serif; font-weight: 900; letter-spacing: 2px;">ADAL</span>';
+                await new Promise(r => setTimeout(r, 2000));
+                core.style.background = '#000';
+                core.innerHTML = '<span style="color: #fff; font-family: \'Space Grotesk\', sans-serif; font-weight: 900; letter-spacing: 2px;">VERDICT</span>';
+            }
+
+            // Reset
+            agents.forEach(agentId => $(agentId)?.classList.remove('active'));
+        }
+        // ═══════════════════════════════════════
+        // VANILLA BIY COUNCIL SIMULATION
+        // ═══════════════════════════════════════
+
+        const BIY_AGENTS_DATA = [
+            { id: 'auditor', name: 'AUDITOR', logs: ["Scanning GPS: 48.85 N, 2.29 E", "Validating mission metadata...", "GPS integrity verified."] },
+            { id: 'skeptic', name: 'SKEPTIC', logs: ["Performing pixel forensics...", "No deepfake signatures detected.", "Shadow geometry matches light source."] },
+            { id: 'social', name: 'SOCIAL', logs: ["Evaluating ASAR level...", "Social lift score: +18 Aura.", "Contributor sincerity confirmed."] },
+            { id: 'master', name: 'MASTER', logs: ["Synthesizing multi-agent data...", "Consensus reached: 99.8% match.", "Manifest signed by Zheti Zhargy."] }
+        ];
+
+        window.runBiyVanilla = async function(mode) {
+            const logsEl = document.getElementById('biy-logs-vanilla');
+            const manifestEl = document.getElementById('biy-manifest-card');
+            const manifestJson = document.getElementById('biy-manifest-json');
+            const tag = document.getElementById('biy-verdict-tag');
+            
+            if (!logsEl || !manifestEl) return;
+
+            // Reset
+            logsEl.innerHTML = '';
+            manifestEl.style.opacity = '0';
+            manifestEl.style.transform = 'translateY(20px)';
+            document.querySelectorAll('.biy-agent-card .status-fill').forEach(el => {
+                el.style.width = '0%';
+                el.style.background = '#00F0FF';
+            });
+            
+            for (let i = 0; i < BIY_AGENTS_DATA.length; i++) {
+                const agent = BIY_AGENTS_DATA[i];
+                const card = document.getElementById(`biy-${agent.id}`);
+                const bar = card?.querySelector('.status-fill');
+                
+                if (bar) bar.style.width = '100%';
+                
+                if (mode === 'aram' && agent.id === 'skeptic') {
+                    if (bar) bar.style.background = '#FF4D4D';
+                    const failLogs = [
+                        "ALERT: Shadow geometry invalid.",
+                        "Pixel manipulation found at (142, 67).",
+                        "ARAM detected: Block transmission."
+                    ];
+                    for (const log of failLogs) {
+                        const line = document.createElement('div');
+                        line.innerHTML = `<span style="color: #444; margin-right: 10px;">>>></span> <span style="color: #FF4D4D;">SKEPTIC: ${log}</span>`;
+                        logsEl.appendChild(line);
+                        logsEl.scrollTop = logsEl.scrollHeight;
+                        await new Promise(r => setTimeout(r, 400));
+                    }
+                    
+                    // Final Fail State
+                    setTimeout(() => {
+                        manifestEl.style.opacity = '1';
+                        manifestEl.style.transform = 'translateY(0)';
+                        tag.innerText = 'BLOCKED';
+                        tag.style.background = '#FF4D4D';
+                        tag.style.color = '#fff';
+                        manifestJson.innerText = JSON.stringify({
+                            error: "FRAUD_DETECTED",
+                            agent: "SKEPTIC_029",
+                            verdict: "ARAM",
+                            timestamp: new Date().toISOString()
+                        }, null, 2);
+                    }, 500);
+                    return;
+                }
+
+                for (const log of agent.logs) {
+                    const line = document.createElement('div');
+                    line.innerHTML = `<span style="color: #444; margin-right: 10px;">>>></span> ${agent.name}: ${log}`;
+                    logsEl.appendChild(line);
+                    logsEl.scrollTop = logsEl.scrollHeight;
+                    await new Promise(r => setTimeout(r, 400));
+                }
+                
+                await new Promise(r => setTimeout(r, 400));
+            }
+
+            // Success State
+            setTimeout(() => {
+                manifestEl.style.opacity = '1';
+                manifestEl.style.transform = 'translateY(0)';
+                tag.innerText = 'VERIFIED';
+                tag.style.background = '#00F0FF';
+                tag.style.color = '#000';
+                manifestJson.innerText = JSON.stringify({
+                    protocol: "ProtoQol-v1",
+                    verdict: "ADAL",
+                    manifest_hash: "0x" + Math.random().toString(16).slice(2, 10) + "...",
+                    signatures: ["auditor_sig", "skeptic_sig", "social_sig", "master_sig"]
+                }, null, 2);
+            }, 500);
+        };
+
+        console.log("%c⟡ ProtoQol Biy Engine Integration Active", "color: #00E5FF; font-weight: bold;");
     });
 
 })();
